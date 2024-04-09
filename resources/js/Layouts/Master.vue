@@ -7,6 +7,8 @@ import TobBarComponent from './TobBarComponent.vue';
 
 const toggled = ref('')
 
+const token = localStorage.getItem('token');
+
 
 </script>
 
@@ -14,7 +16,7 @@ const toggled = ref('')
     <div id="wrapper">
 
     <!-- Sidebar -->
-        <SideBarComponent :toggled="toggled"/>
+        <SideBarComponent v-if="token" :toggled="toggled"/>
     <!-- End of Sidebar -->
 
 <!-- Content Wrapper -->
@@ -24,7 +26,7 @@ const toggled = ref('')
         <div id="content">
 
             <!-- Topbar -->
-                <TobBarComponent @emitToggled="toggled=$event" />
+                <TobBarComponent v-if="token" @emitToggled="toggled=$event" />
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
@@ -37,7 +39,7 @@ const toggled = ref('')
         <!-- End of Main Content -->
 
         <!-- Footer -->
-        <FooterComponent></FooterComponent>
+        <FooterComponent  ></FooterComponent>
         <!-- End of Footer -->
 
     </div>

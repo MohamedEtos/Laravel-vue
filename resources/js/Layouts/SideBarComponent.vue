@@ -48,6 +48,8 @@ const props= defineProps([
             <h6 class="collapse-header">Custom Components:</h6>
             <a class="collapse-item" href="buttons.html">Buttons</a>
             <a class="collapse-item" href="Admin">Admin</a>
+            <a class="collapse-item" href="Login">Login</a>
+            <a class="collapse-item" href="register">register</a>
         </div>
     </div>
 </li>

@@ -9,6 +9,8 @@ import router from './router';
 import { createApp } from 'vue';
 import Master from './Layouts/Master.vue';
 import Admin from './Pages/Admin.vue';
+import Login from './Pages/Login.vue';
+import Register from'./Pages/register.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
