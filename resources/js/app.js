@@ -5,8 +5,10 @@
  */
 
 import './bootstrap';
+import router from './router';
 import { createApp } from 'vue';
-import Login from './login/login2.vue';
+import Master from './Layouts/Master.vue';
+import Admin from './Pages/Admin.vue';
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -16,7 +18,9 @@ import Login from './login/login2.vue';
 
 const app = createApp({});
 
-app.component('login2-component',Login);
+app.use(router);
+
+app.component('home-component',Master);
 
 
 
