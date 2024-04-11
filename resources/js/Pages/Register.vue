@@ -8,11 +8,11 @@ const email = ref('');
 const password = ref('');
 const password_confirmation = ref('');
 
-// const confirmPass = () => {
-    // if(password.value !== password_confirmation.value){
-    //     alert('passowrd not match');;
-    // }
-// };
+const confirmPass = () => {
+    if(password.value !== password_confirmation.value){
+        alert('passowrd not match');;
+    }
+};
 
 
 const Register = () => {
@@ -21,24 +21,21 @@ const Register = () => {
         alert('plase fill all fields');
     }else{
 
-        Axios.post('/api/register',{
+        axios.post('/api/register',{
             name:name.value,
             email:email.value,
             password:password.value,
             password_confirmation:password_confirmation.value
         }).then((res) => {
-            console.log(res.data)
             localStorage.setItem('token',res.data.token)
-            localStorage.setItem('user',JSON.stringify(res.data.user))
+            // localStorage.setItem('user',JSON.stringify(res.data.user))
             window.location.href = '/admin'
         }).catch((err)=>{
             console.log(err)
         })
     }
 
-    if(password.value !== password_confirmation.value){
-        alert('passowrd not match');;
-    }
+
 
 };
 
@@ -78,10 +75,10 @@ const Register = () => {
                                     </div>
                                 </div>
                                 <a @click="Register()" class="btn btn-primary btn-user btn-block">
-                                    Login
-                                </a>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">
                                     Register Account
+                                </a>
+                                <a href="login" class="btn btn-primary btn-user btn-block">
+                                    Have Arealy account
                                 </a>
                                 <hr>
 
