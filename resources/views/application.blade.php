@@ -19,9 +19,10 @@
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
 </head>
+@vite('resources/js/app.js')
+
 <body id="page-top">
     <div id="app">
-        @vite('resources/js/app.js')
         <home-component> </home-component>
     </div>
 

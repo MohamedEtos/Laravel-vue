@@ -27,7 +27,7 @@ const Register = () => {
             password:password.value,
             password_confirmation:password_confirmation.value
         }).then((res) => {
-            localStorage.setItem('token',res.data.token)
+            localStorage.setItem('access_token',res.data.access_token)
             // localStorage.setItem('user',JSON.stringify(res.data.user))
             window.location.href = '/admin'
         }).catch((err)=>{
@@ -77,18 +77,20 @@ const Register = () => {
                                 <a @click="Register()" class="btn btn-primary btn-user btn-block">
                                     Register Account
                                 </a>
-                                <a href="login" class="btn btn-primary btn-user btn-block">
-                                    Have Arealy account
-                                </a>
+
                                 <hr>
 
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                <a class="small" href="">Forgot Password?</a>
                             </div>
                             <div class="text-center">
-                                <a class="small" href="login.html">Already have an account? Login!</a>
+                                <router-link
+                                class="small"
+                                to="Login">
+                                Already have an account? Login!
+                                </router-link>
                             </div>
                         </div>
                     </div>

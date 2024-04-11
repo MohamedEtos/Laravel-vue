@@ -1,7 +1,8 @@
 <script setup>
-import {ref} from 'vue'
 
 const toggled = ref('')
+import {ref} from 'vue'
+
 const emit = defineEmits(['emitToggled'])
 const sidebarToggleTop = () => {
     if(toggled.value === ''){
@@ -10,8 +11,20 @@ const sidebarToggleTop = () => {
     }else{
         toggled.value = ''
         emit('emitToggled', toggled.value)
-
     }
+}
+
+
+const logout  =()=>{
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('access_token');
+    axios.get('/api/logout').then((res)=>{
+        localStorage.removeItem('access_token')
+        window.location.href = '/login'
+    }).catch((err)=>{
+        console.log(err)
+    })
+    localStorage.removeItem('access_token')
+    window.location.href = '/login'
 }
 </script>
 
@@ -145,7 +158,7 @@ const sidebarToggleTop = () => {
 
 
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+            <a class="dropdown-item" href="login" @click="logout()" data-toggle="modal" data-target="#logoutModal">
                 <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                 Logout
             </a>

@@ -1,4 +1,5 @@
 import { createRouter,createWebHistory } from "vue-router";
+import {isUserLoggedIn} from "./utils";
 const router = createRouter({
     history:createWebHistory(),
     routes : [
@@ -25,4 +26,29 @@ const router = createRouter({
     ]
 })
 
+// GOOD
+// router.beforeEach((to, from, next) => {
+//     if (to.name !== 'login' && !isUserLoggedIn()) next({ name: 'Login' })
+//     else next()
+// })
+
+
+router.beforeEach((to,from,next)=>{
+
+    if ( to.name === 'register' && !isUserLoggedIn())
+    {
+        next()
+    }
+    else if(to.name !== 'login' && !isUserLoggedIn())
+    {
+        next({name:'login'})
+    }
+    else if ((to.name === 'login' || to.name === 'register') && isUserLoggedIn())
+    {
+        next({name:'admin'})
+    }
+    else{
+        next()
+    }
+})
 export default router

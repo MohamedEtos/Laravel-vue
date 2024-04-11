@@ -7,7 +7,7 @@ import TobBarComponent from './TobBarComponent.vue';
 
 const toggled = ref('')
 
-const token = localStorage.getItem('token');
+const token = localStorage.getItem('access_token');
 
 
 </script>
