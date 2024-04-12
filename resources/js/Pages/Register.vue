@@ -83,7 +83,7 @@ const Register = () => {
                             </form>
                             <hr>
                             <div class="text-center">
-                                <a class="small" href="">Forgot Password?</a>
+                                <router-link class="small" to="forgetPassword">Forgot Password?</router-link>
                             </div>
                             <div class="text-center">
                                 <router-link

@@ -31,7 +31,9 @@ const token = localStorage.getItem('access_token');
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <router-view></router-view>
+<!--                <transition>-->
+                    <router-view></router-view>
+<!--                </transition>-->
             </div>
             <!-- /.container-fluid -->
 

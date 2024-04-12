@@ -1,1 +1,1 @@
-export const isUserLoggedIn = () => localStorage.getItem('access_token') === true
+export const isUserLoggedIn = () => localStorage.getItem('access_token')

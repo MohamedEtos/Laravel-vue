@@ -22,30 +22,37 @@ const router = createRouter({
             path:'/register',
             name:'register',
             component:() => import ('../Pages/register.vue')
+        },
+        {
+            path:'/forgetPassword',
+            name:'forgetPassword',
+            component:() => import ('../Pages/forgetPassword.vue')
+        },
+        {
+            path:'/:pathMatch(.*)*',
+            component:() => import ('../Pages/errors/404.vue')
         }
     ]
 })
 
-// GOOD
-// router.beforeEach((to, from, next) => {
-//     if (to.name !== 'login' && !isUserLoggedIn()) next({ name: 'Login' })
-//     else next()
-// })
+
+
 
 
 router.beforeEach((to,from,next)=>{
 
-    if ( to.name === 'register' && !isUserLoggedIn())
+    if ( (to.name === 'register' || to.name === 'forgetPassword') && !isUserLoggedIn())
     {
         next()
     }
+
     else if(to.name !== 'login' && !isUserLoggedIn())
     {
         next({name:'login'})
     }
     else if ((to.name === 'login' || to.name === 'register') && isUserLoggedIn())
     {
-        next({name:'admin'})
+        next({path:'/admin'})
     }
     else{
         next()

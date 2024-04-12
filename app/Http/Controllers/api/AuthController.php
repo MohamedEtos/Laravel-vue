@@ -101,4 +101,26 @@ class AuthController extends Controller
         ]);
     }
 
+    public function resetPassword(Request $request)
+    {
+//        return response()->json(['message'=>$request->all()]);
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|max:100|email|exists:users',
+        ], [
+            'email.required' => 'هذه الحقل مطلوب',
+            'email.exists' => 'هذه الايميل غير صحيح',
+            'email.max' => 'لا يمكن تخطي اللحد الاقصي',
+            'email.email'=>'يرجي كتاابه بريد صالح',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => $validator->errors(),
+                'status'=>500
+            ]);
+        };
+
+
+    }
+
 }
