@@ -3,14 +3,24 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\User;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
+    public function user(Request $request){
+        $user = $request->user();
+//        $user = Auth::user();
+        return response()->json([
+            'user'=>$user,
+        ],200);
+
+    }
+
+
     public function register(Request $request)
     {
 
@@ -67,20 +77,21 @@ class AuthController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()]);
+            return response()->json(['message' => $validator->errors()]);
         };
 
 
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $user = $request->user();
-        $tokenResult = $user->createToken('auth_token');
-        $token = $tokenResult->plainTextToken;
 
+
+        $user = auth()->user();
+
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json([
            'status'=>200,
@@ -103,12 +114,11 @@ class AuthController extends Controller
 
     public function resetPassword(Request $request)
     {
-//        return response()->json(['message'=>$request->all()]);
         $validator = Validator::make($request->all(), [
-            'email' => 'required|max:100|email|exists:users',
+            'email' => 'required|max:100|email|exists:users,email',
         ], [
             'email.required' => 'هذه الحقل مطلوب',
-            'email.exists' => 'هذه الايميل غير صحيح',
+            'email.exists' => 'هذه الايميل غير موجود',
             'email.max' => 'لا يمكن تخطي اللحد الاقصي',
             'email.email'=>'يرجي كتاابه بريد صالح',
         ]);
@@ -120,7 +130,43 @@ class AuthController extends Controller
             ]);
         };
 
+        $user = User::where('email',$request->email)->first();
 
+        if(!$user){
+            return response()->json(['status'=>500,'message'=>'this email not found']);
+        }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+
+        $toEmail = $request->email;
+        $subject = 'reset password notifcation';
+        $fromEmail = 'app@gmail.com';
+        $name = $user->name;
+
+        $data = array('name'=>$name,'token' =>$token);
+
+        Mail::send('emails.email',$data,function($message) use ($toEmail,$subject,$fromEmail){
+            $message->to($toEmail)->subject($subject);
+            $message->from($fromEmail);
+        });
+
+        return response()->json(['status'=>200,'message'=>'email sended']);
+
+    }
+
+
+    public function resetPass(Request $request)
+    {
+
+        $id = $request->user()->id;
+
+        $user = User::find($id)->update([
+            'password' => bcrypt($request->password)
+        ]);
+        return response()->json([
+            'status' => 200,
+            'message' => 'password change success'
+        ]);
     }
 
 }

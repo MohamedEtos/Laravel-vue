@@ -29,6 +29,21 @@ const router = createRouter({
             component:() => import ('../Pages/forgetPassword.vue')
         },
         {
+            path:'/resetPassword',
+            name:'resetPassword',
+            component:() => import ('../Pages/ResetPassword.vue')
+        },
+        {
+            path:'/resetPasswordForm',
+            name:'resetPasswordForm',
+            component:() => import ('../Pages/ResetPasswordForm.vue')
+        },
+        {
+            path:'/ResetPasswordSend',
+            name:'ResetPasswordSend',
+            component:() => import ('../Pages/ResetPasswordSend.vue')
+        },
+        {
             path:'/:pathMatch(.*)*',
             component:() => import ('../Pages/errors/404.vue')
         }
@@ -41,7 +56,7 @@ const router = createRouter({
 
 router.beforeEach((to,from,next)=>{
 
-    if ( (to.name === 'register' || to.name === 'forgetPassword') && !isUserLoggedIn())
+    if ( (to.name === 'register' || to.name === 'forgetPassword' || to.name === 'ResetPasswordSend'|| to.name === 'resetPasswordForm') && !isUserLoggedIn())
     {
         next()
     }

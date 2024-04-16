@@ -9,6 +9,11 @@ const toggled = ref('')
 
 const token = localStorage.getItem('access_token');
 
+const user = ref('')
+
+axios.get('/api/user').then( (res) => {
+    user.value = res.data.user;
+});
 
 </script>
 

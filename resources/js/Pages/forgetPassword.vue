@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import { ref } from "vue"
 
 const email = ref('')
 const loading = ref(false)
@@ -13,12 +13,10 @@ const ResetPassword =()=>{
         axios.post('/api/resetPassword',{
             email: email.value
         }).then((res)=>{
-            if (res.data.status === 200) {
+            if(res.data.status === 200){
                 loading.value = false
                 send.value = true
-                alert(res.data.message)
-            }else {
-                alert(res.data.message);
+                // alert(res.data.message)
             }
         }).catch((err)=>{
             console.log(err)
@@ -44,7 +42,7 @@ const ResetPassword =()=>{
                             <div class="p-5">
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-2">Forgot Your Password?</h1>
-                                    <p v-if="send" class="mb-4">We get it, stuff happens. Just enter your email address below
+                                    <p v-if="send" class="mb-4 text-success">We get it, stuff happens. Just enter your email address below
                                         and we'll send you a link to reset your password!</p>
                                 </div>
                                 <form class="user" method="post" >
@@ -54,14 +52,14 @@ const ResetPassword =()=>{
                                                placeholder="Enter Email Address...">
                                     </div>
                                     <div class="form-group" v-if="!loading">
-                                        <input type="email" v-model="email" class="form-control form-control-user"
+                                        <input type="email"  v-model="email" class="form-control form-control-user"
                                                id="exampleInputEmail" aria-describedby="emailHelp"
                                                placeholder="Enter Email Address...">
                                     </div>
                                     <a v-if="!loading" @click="ResetPassword()" class="btn btn-primary btn-user btn-block">
                                         Reset Password
                                     </a>
-                                    <a v-if="loading"  class="btn btn-primary btn-user btn-block">
+                                    <a v-if="loading"  class="btn btn-danger btn-user btn-block">
                                         waiting ....
                                     </a>
                                 </form>

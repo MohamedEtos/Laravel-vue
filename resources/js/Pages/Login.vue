@@ -2,7 +2,7 @@
 import { ref } from "vue";
 
 const email = ref("");
-
+const errors = ref('')
 const password = ref("");
 
 const login = () => {
@@ -18,12 +18,11 @@ const login = () => {
         if (res.data.status === 200) {
           localStorage.setItem("access_token", res.data.access_token);
           window.location.href = "/admin";
-        } else {
-          alert(res.data.message);
         }
       })
       .catch((err) => {
-        console.log(err);
+          // errors.value = err.response.data.message
+          errors.value = 'the email or password wrong'
       });
   }
 };
@@ -68,7 +67,9 @@ const login = () => {
                         class="custom-control-input"
                         id="customCheck"
                       />
-                      <label class="custom-control-label" for="customCheck"
+                        <div class="text-danger" v-if="errors">{{ errors }}</div>
+
+                        <label class="custom-control-label" for="customCheck"
                         >Remember Me</label
                       >
                     </div>
